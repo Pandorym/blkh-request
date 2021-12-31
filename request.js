@@ -874,6 +874,12 @@ Request.prototype.onRequestError = function (error) {
     return
   }
   self.clearTimeout()
+  
+  if (self.callback) {
+    self.callback(error)
+    return
+  }
+  
   self.emit('error', error)
 }
 
