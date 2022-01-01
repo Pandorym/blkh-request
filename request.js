@@ -467,6 +467,8 @@ Request.prototype.init = function (options) {
       self.agentOptions = options.agentOptions
     }
 
+    self.agentForceNew = options.agentForceNew === true
+
     if (options.agentClass) {
       self.agentClass = options.agentClass
     } else if (options.forever) {
@@ -621,6 +623,10 @@ Request.prototype.getNewAgent = function () {
   }
 
   var poolKey = ''
+  
+  if (self.agentForceNew === true) {
+    return new Agent(options)
+  }
 
   // different types of agents are in different pools
   if (Agent !== self.httpModule.Agent) {
